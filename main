@@ -1,0 +1,106 @@
+import discord
+import os
+import requests
+import json 
+import random
+from replit import db
+from discord.ext.commands import Bot
+from keep_alive import keep_alive
+from discord.ext import commands
+import asyncio
+#from discord_components import DiscordComponents, Button, ButtonStyle, InteractionType
+
+client = discord.Client()
+
+my_secret = os.environ['TOKEN']
+
+prefix='?'
+
+bot = commands.Bot(command_prefix=prefix, description="lol")
+
+Noice = ['noice','NOICE', 'Noice']
+
+Gm = ['GM', 'gm', 'Gm']
+
+Gn = ['Gn', 'gn', 'Gn']
+
+help_get = ['?help', '?Help', '?HELP', '? help']
+
+server_ip = ['?ip', '?IP', '?Ip', '? ip', '? IP', '? Ip']
+
+swear_words=[
+  'fuck', 'shit', 'SHIT', 'Shit', 'cum', 'Cum', 'bitch', 'Bitch', 'BITCH', 'CUM', 'dick', 'DICK', 'sperm', 'Sperm', 'SPERM', 'Fuck', 'FUCK', 'sex', 'SEX', 'Sex', 'Dick', ' Motherfucker', 'Mother fucker', 'mother fucker', 'motherfucker', 'MOTHERFUKER'
+]
+
+swear_give=[
+  'Dont even try', 'woah there buddy', 'Watch your words....'
+]
+
+
+
+@client.event
+async def on_ready():
+  print('Bot is Ready.'.format(client))
+  await client.change_presence(activity=discord.Game('?help | SwiftBot'))
+
+#button code starts from here!
+#async def on_ready():
+    #DiscordComponents(client, change_discord_methods=True)
+    #await client.change_presence(activity=discord.Game(name=f"{prefix}help"))
+    #print("Bot has successfully logged in as: {}".format(client.user))
+    #print("Bot ID: {}\n".format(client.user.id))
+
+    #@client.command()
+    #async def button(ctx):
+        #await ctx.send(type=InteractionType.ChannelMessageWithSource, content="Message Here", components=[Button   (style=ButtonStyle.URL, label="Example Invite Button", url="https://google.com"), Button    (style=ButtonStyle.blue, label="Default Button", custom_id="button")])
+#till this is buttons code,Havent finished it yet.
+
+@client.event
+async def on_message(message):
+    if message.author == client.user:
+ 
+     if any(word in message.content for word in (help_get)):
+      embedVar = discord.Embed(title="**Help!**", description="Note : I am still under Construction so dont expect much from me..", color=0x00ff00)
+      embedVar.add_field(name="**Prefix**", value="My Prefix is `?` ", inline=True)
+      embedVar.add_field(name="**Created By:**", value="@SilverMetric#9411", inline=True)
+      await message.channel.send(embed=embedVar)
+      return
+  #if message.content.startswith('?ip'):
+    #await message.channel.send(' **SwiftCraftSmpSeason1.aternos.me** ')
+    #return
+
+    if str(client.user.id) in message.content:
+      await message.channel.send('Im here to help')      
+      return
+
+
+    if any(word in message.content for word in swear_words):
+      await message.delete(delay=0.50);
+      await message.channel.send(f'<@{message.author.id}>'+ random.choice(swear_give))    
+      return
+
+  #if any(word in msg for word in help_get):
+    #await message.channel.send('Im here to help')
+
+    if any(word in message.content for word in (server_ip)):
+      embedVar = discord.Embed(title= '**Ip Address**', description='**Survival Smp!**', color=discord.Colour.red())
+      embedVar.add_field(name="** **", value="**Ip** : `SwiftCraftSmpSeason1.aternos.me`", inline=False)
+      embedVar.add_field(name="** **", value="**Port** : 49750", inline=True)
+      embedVar.add_field(name="** **", value="**Version** : 1.17.1", inline=True)
+      embedVar.add_field(name="** **", value="**Cracked** : ✔️", inline=True)
+      await message.channel.send(embed=embedVar)
+
+  #if message.author.bot:
+    #return
+
+    if any(word in message.content for word in Gn):
+     await message.channel.send('Good Night, Sweet Dreams:zzz:')
+  
+    if any(word in message.content for word in Noice):
+     await message.channel.send('Yea!, Really NOOICE!')
+     
+    if any(word in message.content for word in Gm):
+     await message.channel.send('Good Morning!, Finally Awake! :partly_sunny:')
+     return         
+
+keep_alive()
